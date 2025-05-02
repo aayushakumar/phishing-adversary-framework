@@ -33,7 +33,7 @@ By iteratively training on adversarial samples, the framework significantly boos
 
 ```bash
 # Clone the repository
-git clone https://github.com/<your-username>/phishing-adversary-framework.git
+git clone https://github.com/aayushakumar/phishing-adversary-framework.git
 cd phishing-adversary-framework
 
 # (Optional) Build and run Docker container
