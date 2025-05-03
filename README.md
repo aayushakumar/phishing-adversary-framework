@@ -1,10 +1,5 @@
-# phishing-adversary-framework
+# Phishing Adversary Framework
 
-*A robust adversarial training loop for phishing email detection using reinforcement learning.*
-
----
-
-## Overview
 
 This repository contains the code, data, and experiment scripts for **phishing-adversary-framework**, an end-to-end framework that alternates between:
 
@@ -12,6 +7,18 @@ This repository contains the code, data, and experiment scripts for **phishing-a
 2. **Defender**: A BERT-based classifier retrained on both clean and adversarial examples to improve robustness.
 
 By iteratively training on adversarial samples, the framework significantly boosts detection rates under attack while maintaining high accuracy on benign emails.
+
+---
+An extensible adversarial phishing email detection system that implements a full attacker–defender loop. Includes:
+
+* **Data Pipeline**: Download & preprocess real and synthetic phishing/ham datasets.
+* **Attack Module**: Template-based, perturbation-based, and learning-based phishing email generators.
+* **Defense Module**: Transformer-based, handcrafted-features, ensemble, and adaptive defenses.
+* **Game-Theoretic Planner**: Strategy mixing via payoff matrices & Nash equilibrium solvers.
+* **Adversarial Controller**: Orchestrates iterative attacker–defender rounds, logs metrics.
+* **Analysis & Reporting**: Visualization of detection/evasion over rounds, feature importance, statistical analysis, and final report generation.
+
+<!-- --- -->
 
 ## Features
 
@@ -26,80 +33,73 @@ By iteratively training on adversarial samples, the framework significantly boos
 ### Prerequisites
 
 * Python 3.10+
-* Docker (optional, for containerized setup)
+<!-- * Docker (optional, for containerized setup) -->
 * NVIDIA GPU with CUDA (recommended for training efficiency)
 
-### Installation
+<!-- ### Installation
 
 ```bash
 # Clone the repository
 git clone https://github.com/aayushakumar/phishing-adversary-framework.git
 cd phishing-adversary-framework
 
-# (Optional) Build and run Docker container
-docker build -t phish-adv .
-docker run --gpus all -it --rm -v "$PWD":/workspace phish-adv
+ -->
+## ⚙️ Installation
 
-# Or install dependencies locally
-pip install -r requirements.txt
+1. Clone the repo:
+
+   ```bash
+   git clone https://github.com/aayushakumar/phishing-adversary-framework.git
+   cd phishing-adversary-framework
+   ```
+
+2. (Optional) Create and activate a virtual environment:
+
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+
+3. Install dependencies:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+
+## 🚀 Quickstart
+
+### 1. Prepare Data (TO BE COMPLETED)
+
+```bash
+# Download and preprocess datasets
+python scripts/prepare_data.py --raw-dir data/raw --proc-dir data/processed
 ```
 
-## Usage
+*For demo or Kaggle usage, you can instead generate synthetic data:*
 
-1. **Prepare Data**
-
-   ```bash
-   python scripts/prepare_dataset.py --input-dir data/raw --output-dir data/processed
-   ```
-2. **Train Baseline Classifier**
-
-   ```bash
-   python train_classifier.py --config configs/baseline.yaml
-   ```
-3. **Run Adversarial Loop**
-
-   ```bash
-   python run_adversarial_loop.py --config configs/adv_loop.yaml
-   ```
-4. **Evaluate & Calibrate**
-
-   ```bash
-   python evaluate.py --model-path checkpoints/adv_model.pt
-   python calibrate.py  --model-path checkpoints/adv_model.pt --temp-output reports/temperature_analysis.png
-   ```
-
-## Repository Structure
-
+```bash
+python scripts/prepare_data.py --use-synthetic
 ```
-├── README.md
-├── Dockerfile
-├── requirements.txt
-├── data/
-│   ├── raw/                 # Original phishing & ham emails
-│   └── processed/           # Preprocessed text corpus
-├── scripts/
-│   ├── prepare_dataset.py   # Data parsing & splits
-│   └── ...                  # Other utility scripts
-├── configs/
-│   ├── baseline.yaml        # Baseline training settings
-│   └── adv_loop.yaml        # Adversarial loop settings
-├── models/
-│   ├── classifier/          # BERT fine-tune code
-│   └── attacker/            # RL policy network code
-├── experiments/
-│   ├── logs/                # Training & evaluation logs
-│   └── figures/             # Plots: robustness, calibration
-├── notebooks/               # Jupyter demos & analysis
-└── LICENSE
+
+### 2. Train Defender
+
+```bash
+python scripts/train_defender.py \
+  --train-csv data/processed/train.csv \
+  --val-csv   data/processed/val.csv \
+  --output    models/transformer-defender
 ```
+
+
+
+---
 
 ## Results
 
 * **Clean Accuracy**: \~96.8% ± 0.5%
 * **Robust Detection Rate**: +25% absolute improvement under attack
 * **ECE Reduction**: \~70% via temperature scaling
-
-Detailed tables and figures are available in the `experiments/figures` directory.
 
 ## Contributing
 
