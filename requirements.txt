@@ -1,0 +1,13 @@
+transformers
+datasets
+torch
+pandas
+scikit-learn
+tqdm
+matplotlib
+seaborn
+nltk
+gdown
+advertorch
+optuna
+gradio
